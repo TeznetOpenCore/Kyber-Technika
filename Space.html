@@ -1,0 +1,198 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orbit Simulation with Glitch Countdown</title>
+  <link href="https://fonts.googleapis.com/css?family=Varela" rel="stylesheet" />
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body.space-background {
+      background-color: black;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Varela', sans-serif;
+      position: relative;
+    }
+
+    .central-circle {
+      height: 150px;
+      width: 150px;
+      background: linear-gradient(purple, black, green);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      box-shadow: 
+        0 0 20px #ff00ff, 
+        0 0 40px #ff00ff, 
+        0 0 60px #ff00ff;
+      z-index: 10;
+    }
+
+    /* Glitch effect text */
+    .glitch {
+      font-size: 40px;
+      color: rgba(255, 20, 147, 0.1)
+;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 20;
+      width: 100px;
+      text-shadow: 0 0 2px #fff;
+    }
+
+    /* ← HERE is the softened black bar effect by using rgba */
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.05); /* softened black, not pure black */
+      overflow: hidden;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 purple;
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: 2px 0 pink;
+      animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 15px, 0); }
+      10% { clip: rect(50px, 9999px, 60px, 0); }
+      20% { clip: rect(25px, 9999px, 30px, 0); }
+      30% { clip: rect(0px, 9999px, 5px, 0); }
+      40% { clip: rect(35px, 9999px, 40px, 0); }
+      50% { clip: rect(15px, 9999px, 25px, 0); }
+      60% { clip: rect(45px, 9999px, 50px, 0); }
+      70% { clip: rect(10px, 9999px, 20px, 0); }
+      80% { clip: rect(30px, 9999px, 35px, 0); }
+      90% { clip: rect(5px, 9999px, 15px, 0); }
+      100% { clip: rect(20px, 9999px, 25px, 0); }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% { clip: rect(5px, 9999px, 10px, 0); }
+      10% { clip: rect(40px, 9999px, 50px, 0); }
+      20% { clip: rect(15px, 9999px, 20px, 0); }
+      30% { clip: rect(25px, 9999px, 35px, 0); }
+      40% { clip: rect(0px, 9999px, 10px, 0); }
+      50% { clip: rect(20px, 9999px, 25px, 0); }
+      60% { clip: rect(30px, 9999px, 40px, 0); }
+      70% { clip: rect(10px, 9999px, 15px, 0); }
+      80% { clip: rect(35px, 9999px, 45px, 0); }
+      90% { clip: rect(5px, 9999px, 10px, 0); }
+      100% { clip: rect(15px, 9999px, 20px, 0); }
+    }
+
+    /* Orbit animations */
+    .orbit-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+      animation: orbit linear infinite;
+    }
+
+    @keyframes orbit {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .planet {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: linear-gradient(to left, #8942a8, #ba382f);
+      box-shadow: 
+        0 0 10px #39ff14,
+        0 0 20px #39ff14,
+        0 0 40px #39ff14,
+        0 0 80px #39ff14;
+    }
+
+    .mercury-orbit { width: 200px; height: 200px; margin: -100px 0 0 -100px; animation-duration: 4s; }
+    .venus-orbit { width: 300px; height: 300px; margin: -150px 0 0 -150px; animation-duration: 7s; }
+    .earth-orbit { width: 400px; height: 400px; margin: -200px 0 0 -200px; animation-duration: 10s; }
+    .mars-orbit { width: 500px; height: 500px; margin: -250px 0 0 -250px; animation-duration: 13s; }
+    .jupiter-orbit { width: 650px; height: 650px; margin: -325px 0 0 -325px; animation-duration: 18s; }
+
+    .mercury { width: 10px; height: 10px; }
+    .venus { width: 20px; height: 20px; }
+    .earth { width: 25px; height: 25px; }
+    .mars {
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(to left, red, darkred);
+    }
+    .jupiter {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(to left, orange, brown);
+    }
+  </style>
+</head>
+<body class="space-background">
+
+  <!-- Glowing central star with glitch countdown -->
+  <div class="central-circle">
+    <div class="glitch" id="countdown" data-text="52">52</div>
+  </div>
+
+  <!-- Orbits -->
+  <div class="orbit-wrapper mercury-orbit"><div class="planet mercury"></div></div>
+  <div class="orbit-wrapper venus-orbit"><div class="planet venus"></div></div>
+  <div class="orbit-wrapper earth-orbit"><div class="planet earth"></div></div>
+  <div class="orbit-wrapper mars-orbit"><div class="planet mars"></div></div>
+  <div class="orbit-wrapper jupiter-orbit"><div class="planet jupiter"></div></div>
+
+  <!-- Countdown Script -->
+  <script>
+    function updateCountdown() {
+      const now = new Date();
+      const targetDate = new Date("2030-01-01T00:00:00");
+
+      let years = targetDate.getFullYear() - now.getFullYear();
+      let months = targetDate.getMonth() - now.getMonth();
+      let totalMonths = years * 12 + months;
+
+      if (now.getDate() > targetDate.getDate()) {
+        totalMonths -= 1;
+      }
+
+      totalMonths = Math.max(0, totalMonths);
+
+      const countdown = document.getElementById("countdown");
+      countdown.textContent = totalMonths;
+      countdown.setAttribute("data-text", totalMonths);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 60 * 60 * 24);
+  </script>
+</body>
+</html>
+
