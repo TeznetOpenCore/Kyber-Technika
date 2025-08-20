@@ -1,0 +1,127 @@
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.space-background {
+  background-color: black;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  font-family: sans-serif;
+}
+
+/* Central glowing star */
+.central-circle {
+  height: 150px;
+  width: 150px;
+  background: linear-gradient(purple, black, green);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+ box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff;
+
+  z-index: 10;
+}
+
+/* Orbit wrapper - responsible for rotation */
+.orbit-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  animation: orbit linear infinite;
+}
+
+/* All planets share this */
+.planet {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: linear-gradient(to left, #8942a8, #ba382f);
+ box-shadow: 
+  0 0 10px #39ff14,
+  0 0 20px #39ff14,
+  0 0 40px #39ff14,
+  0 0 80px #39ff14;
+
+
+}
+
+/* Keyframes for orbiting */
+@keyframes orbit {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Individual orbit sizes and speeds */
+.mercury-orbit {
+  width: 200px;
+  height: 200px;
+  margin: -100px 0 0 -100px;
+  animation-duration: 4s;
+}
+
+.venus-orbit {
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+  animation-duration: 7s;
+}
+
+.earth-orbit {
+  width: 400px;
+  height: 400px;
+  margin: -200px 0 0 -200px;
+  animation-duration: 10s;
+}
+
+.mars-orbit {
+  width: 500px;
+  height: 500px;
+  margin: -250px 0 0 -250px;
+  animation-duration: 13s;
+}
+
+.jupiter-orbit {
+  width: 650px;
+  height: 650px;
+  margin: -325px 0 0 -325px;
+  animation-duration: 18s;
+}
+
+/* Planet sizes */
+.mercury {
+  width: 10px;
+  height: 10px;
+}
+
+.venus {
+  width: 20px;
+  height: 20px;
+}
+
+.earth {
+  width: 25px;
+  height: 25px;
+}
+
+.mars {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(to left, red, darkred);
+}
+
+.jupiter {
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(to left, orange, brown);
+}
+
