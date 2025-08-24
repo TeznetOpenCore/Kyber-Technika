@@ -1,0 +1,102 @@
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(5, 120px);
+  grid-gap: 20px;
+}
+
+/* Shared Styles */
+.box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
+  font-size: 16px;       /* smaller font */
+  height: 100px;
+  width: 100px;
+  margin: 20px;
+  color: black;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.box span {
+  position: absolute;
+  transition: opacity 0.4s ease;
+}
+
+.box .default {
+  opacity: 1;
+}
+.box .alt {
+  opacity: 0;
+}
+
+.box:hover .default {
+  opacity: 0;
+}
+.box:hover .alt {
+  opacity: 1;
+}
+
+/* Static box colors */
+.div1 { background-color: #ff0055; }
+.div2 { background-color: #f700ff; }
+.div3 { background-color: #00e1ff; }
+.div4 { background-color: #00ff91; }
+.div5 { background-color: purple; }
+.div6 { background-color: #15ff00; }
+.div7 { background-color: #5900ff; }
+.div8 { background-color: #ddff00; }
+.div9 { background-color: #0099ff; }
+.div10 { background-color: #ffae00; }
+
+/* Hover Animations (slowed down) */
+.div1:hover,
+.div3:hover,
+.div5:hover,
+.div7:hover,
+.div9:hover {
+  background-color: blue;
+  animation: shift1 8s linear infinite;  /* was 4s → now 8s */
+}
+
+.div2:hover,
+.div4:hover,
+.div6:hover,
+.div8:hover,
+.div10:hover {
+  animation: animation2 10s linear infinite; /* was 5s → now 10s */
+}
+
+/* Animations */
+@keyframes shift1 {
+  25% {
+    opacity: 0.5;
+    transform: rotate(180deg) scale(0.5, 0.5);
+    border-radius: 50%;
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(360deg) scale(1, 1);
+    border-radius: 10%;
+  }
+}
+
+@keyframes animation2 {
+  25% {
+    transform: matrix(.75, .75, 1.5, 1, .5, .5);
+  }
+}
