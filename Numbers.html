@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hover Text Boxes</title>
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;   /* centers horizontally */
+      align-items: center;       /* centers vertically */
+      height: 100vh;             /* full screen height */
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(5, 120px); /* 5 columns */
+      grid-gap: 20px; /* space between boxes */
+    }
+
+    /* Shared Styles */
+    .box {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10%;
+      font-size: 20px;
+      height: 100px;
+      width: 100px;
+      margin: 20px;
+      color: black;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .box span {
+      position: absolute;
+      transition: opacity 0.4s ease;
+    }
+
+    .box .default {
+      opacity: 1;
+    }
+    .box .alt {
+      opacity: 0;
+    }
+
+    .box:hover .default {
+      opacity: 0;
+    }
+    .box:hover .alt {
+      opacity: 1;
+    }
+
+    /* Individual Box Styles */
+    .div1 { background-color: #ff0055; }
+    .div2 { background-color: #f700ff; }
+    .div3 { background-color: #00e1ff; }
+    .div4 { background-color: #00ff91; }
+    .div5 { background-color: purple; }
+    .div6 { background-color: #15ff00; }
+    .div7 { background-color: #5900ff; }
+    .div8 { background-color: #ddff00; }
+    .div9 { background-color: #0099ff; }
+    .div10 { background-color: #ffae00; }
+
+    /* Hover Animations */
+    .div1:hover,
+    .div3:hover,
+    .div5:hover,
+    .div7:hover,
+    .div9:hover {
+      background-color: blue;
+      animation: shift1 8s linear infinite;
+    }
+
+    .div2:hover,
+    .div4:hover,
+    .div6:hover,
+    .div8:hover,
+    .div10:hover {
+      animation: animation2 8s linear infinite;
+    }
+
+    /* Animations */
+    @keyframes shift1 {
+      25% {
+        opacity: 0.5;
+        transform: rotate(180deg) scale(0.5, 0.5);
+        border-radius: 50%;
+      }
+      50% {
+        opacity: 1;
+        transform: rotate(360deg) scale(1, 1);
+        border-radius: 10%;
+      }
+    }
+
+    @keyframes animation2 {
+      25% {
+        transform: matrix(.75, .75, 1.5, 1, .5, .5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="box div1"><span class="default">One</span><span class="alt">Odyn</span></div>
+    <div class="box div2"><span class="default">Two</span><span class="alt">Dva</span></div>
+    <div class="box div3"><span class="default">three</span><span class="alt">Treee</span></div>
+    <div class="box div4"><span class="default">Four</span><span class="alt">Chitiri</span></div>
+    <div class="box div5"><span class="default">Five</span><span class="alt">Pyat</span></div>
+    <div class="box div6"><span class="default">Six</span><span class="alt">Shist</span></div>
+    <div class="box div7"><span class="default">Seven</span><span class="alt">Siem</span></div>
+    <div class="box div8"><span class="default">Eight</span><span class="alt">Vicim</span></div>
+    <div class="box div9"><span class="default">Nine</span><span class="alt">Devet</span></div>
+    <div class="box div10"><span class="default">Ten</span><span class="alt">Decet</span></div>
+  </main>
+</body>
+</html>
